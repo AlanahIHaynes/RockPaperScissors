@@ -1,4 +1,7 @@
 
+let humanScore=0;
+let computerScore=0;
+
 function getComputerChoice(){
     let choice= Math.floor(Math.random() * 3);
     switch(choice){
@@ -17,8 +20,20 @@ function getComputerChoice(){
 
 function getHumanChoice(){
     let userChoice= prompt("Enter Rock, Paper or Scissors: ");
-    console.log('You chose: '+ userChoice);
+    userChoice.toLowerCase();
+    let userChoiceCap= userChoice[0].toUpperCase() + userChoice.split(1);
+    console.log('You chose: '+ userChoiceCap);
 }
 
-getHumanChoice();
-getComputerChoice();
+
+function playRound(humanChoice, computerChoice){
+    if (humanChoice == computerChoice){
+        console.log('Tie!');
+    }
+    
+}
+
+let humanChoice= getHumanChoice();
+let computerChoice= getComputerChoice();
+
+playRound(humanChoice, computerChoice);
