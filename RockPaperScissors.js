@@ -62,6 +62,7 @@ function playRound(humanChoice){
         computerScore++;
     }
     round++;
+    addResultText(`Round ${round} Complete! Press your new choice.`);
     if (round==5){
         displayResults();
     }
