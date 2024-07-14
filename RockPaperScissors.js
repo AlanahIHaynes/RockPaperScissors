@@ -74,20 +74,31 @@ function addResultText(text){
     resultdiv.appendChild(paragraph);
 }
 
-function displayResults(){
 
-    addResultText('Your Score: ' + humanScore);
-    addResultText('Computer Score: ' + computerScore);
+const finalResults=document.createElement('div');
+document.body.appendChild(finalResults);
+function displayResults(){
+    
+    
+    addFinalResultText('Your Score: ' + humanScore);
+    addFinalResultText('Computer Score: ' + computerScore);
 
     if (humanScore==computerScore){
-        addResultText('You tied with the computer! Guess you are just as smart :)');
+        addFinalResultText('You tied with the computer! Guess you are just as smart :)');
     }
 
     else if(humanScore > computerScore){
-        addResultText('You beat the computer! Humans still control machines I guess!');
+        addFinalResultText('You beat the computer! Humans still control machines I guess!');
     }
 
     else{
-        addResultText('Oh no, you lost. Better luck next time!');
+        addFinalResultText('Oh no, you lost. Better luck next time!');
     }
+
+}
+
+function addFinalResultText(text){
+    const paragraph=document.createElement('p');
+    paragraph.textContent = text;
+    finalResults.appendChild(paragraph);
 }
