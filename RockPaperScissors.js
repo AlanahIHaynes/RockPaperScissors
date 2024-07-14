@@ -2,60 +2,34 @@ const rockbtn=document.querySelector('.rock-btn');
 const paperbtn=document.querySelector('.paper-btn');
 const scissorsbtn=document.querySelector('.scissors-btn');
 
+const resultdiv=document.querySelector('.results');
+
+
 rockbtn.addEventListener('click', function() {
     humanChoice='Rock';
-    playGame(humanChoice);
-});
+    playRound(humanChoice);
 
-rockbtn.addEventListener('click', function() {
+});
+    
+paperbtn.addEventListener('click', function() {
     humanChoice='Paper';
-    playGame(humanChoice);
+    playRound(humanChoice);
+        
 });
-
-rockbtn.addEventListener('click', function() {
+    
+scissorsbtn.addEventListener('click', function() {
     humanChoice='Scissors';
-    playGame(humanChoice);
+    playRound(humanChoice);
+        
 });
+    
+
+
 
 let humanScore=0;
 let computerScore=0;
+let round=0;
 
-function playGame(humanChoice){
-
-    let i=0;
-
-    while (i<5){
-        getComputerChoice();
-        playRound(humanChoice, computerChoice);
-
-        let continueChoice=prompt("Would you like to play another round? Enter Yes or No: ");
-        if (continueChoice=='Yes' || continueChoice== 'yes'){
-                i++;
-                continue;
-        }
-        else{
-                resultdiv.textContent += 'Game Over\n';
-                break;
-        }
-        
-    }
-
-    resultdiv.textContent += 'Your Score: ' + humanScore + '\n';
-    resultdiv.textContent += 'Computer Score ' + computerScore + '\n';
-
-    if (humanScore==computerScore){
-        resultdiv.textContent +='You tied with the computer! Guess you are just as smart :)' + '\n';
-    }
-
-    else if(humanScore > computerScore){
-        resultdiv.textContent+='You beat the computer! Humans still control machines I guess!' + '\n';
-    }
-
-    else{
-        resultdiv.textContent+='Oh no, you lost. Better luck next time!' + '\n';
-    }
-    
-}
 
 
 function getComputerChoice(){
@@ -71,20 +45,49 @@ function getComputerChoice(){
 
 }
 
-function playRound(humanChoice, computerChoice){
+function playRound(humanChoice){
+    let computerChoice=getComputerChoice();
     if (humanChoice == computerChoice){
-        resultdiv.textContent+="Tie!" + '\n';
+        addResultText(`Tie! Both you and the computer chose ${computerChoice}!`);
     }
     else if (humanChoice == 'Rock' && computerChoice == 'Scissors' ||
         humanChoice == 'Paper' && computerChoice == 'Rock' ||
         humanChoice == 'Scissors' && computerChoice == 'Paper'){
-        resultdiv.textContent += 'You win! ${humanChoice} beats ${computerChoice} \n';
+        addResultText(`You win! The computer chose ${computerChoice}, and ${humanChoice} beats ${computerChoice}.`);
         humanScore++;
     }
     else{
 
-        resultdiv.textContent +='You lose. ${computerChoice} beats ${humanChoice} \n';
+        addResultText(`You lose. The computer chose ${computerChoice}, and ${computerChoice} beats ${humanChoice}.`);
         computerScore++;
     }
+    round++;
+    if (round==5){
+        displayResults();
+    }
     
+}
+
+function addResultText(text){
+    const paragraph=document.createElement('p');
+    paragraph.textContent = text;
+    resultdiv.appendChild(paragraph);
+}
+
+function displayResults(){
+
+    addResultText('Your Score: ' + humanScore);
+    addResultText('Computer Score: ' + computerScore);
+
+    if (humanScore==computerScore){
+        addResultText('You tied with the computer! Guess you are just as smart :)');
+    }
+
+    else if(humanScore > computerScore){
+        addResultText('You beat the computer! Humans still control machines I guess!');
+    }
+
+    else{
+        addResultText('Oh no, you lost. Better luck next time!');
+    }
 }
