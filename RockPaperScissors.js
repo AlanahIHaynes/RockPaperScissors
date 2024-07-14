@@ -1,95 +1,90 @@
+const rockbtn=document.querySelector('.rock-btn');
+const paperbtn=document.querySelector('.paper-btn');
+const scissorsbtn=document.querySelector('.scissors-btn');
+
+rockbtn.addEventListener('click', function() {
+    humanChoice='Rock';
+    playGame(humanChoice);
+});
+
+rockbtn.addEventListener('click', function() {
+    humanChoice='Paper';
+    playGame(humanChoice);
+});
+
+rockbtn.addEventListener('click', function() {
+    humanChoice='Scissors';
+    playGame(humanChoice);
+});
+
+let humanScore=0;
+let computerScore=0;
+
+function playGame(humanChoice){
+
+    let i=0;
+
+    while (i<5){
+        getComputerChoice();
+        playRound(humanChoice, computerChoice);
+
+        let continueChoice=prompt("Would you like to play another round? Enter Yes or No: ");
+        if (continueChoice=='Yes' || continueChoice== 'yes'){
+                i++;
+                continue;
+        }
+        else{
+                resultdiv.textContent += 'Game Over\n';
+                break;
+        }
+        
+    }
+
+    resultdiv.textContent += 'Your Score: ' + humanScore + '\n';
+    resultdiv.textContent += 'Computer Score ' + computerScore + '\n';
+
+    if (humanScore==computerScore){
+        resultdiv.textContent +='You tied with the computer! Guess you are just as smart :)' + '\n';
+    }
+
+    else if(humanScore > computerScore){
+        resultdiv.textContent+='You beat the computer! Humans still control machines I guess!' + '\n';
+    }
+
+    else{
+        resultdiv.textContent+='Oh no, you lost. Better luck next time!' + '\n';
+    }
+    
+}
+
 
 function getComputerChoice(){
     let choice= Math.floor(Math.random() * 3);
     switch(choice){
         case 0:
-            console.log('The Computer chose: Rock');
             return 'Rock';
-            break;
         case 1:
-            console.log('The Computer chose: Paper');
             return 'Paper';
-            break;
         case 2:
-            console.log('The Computer chose: Scissors');
             return 'Scissors';
-            break;
     }
 
 }
 
-function getHumanChoice(){
-    let userChoice= prompt("Enter Rock, Paper or Scissors: ");
-    userChoice.toLowerCase();
-    let userChoiceCap= userChoice[0].toUpperCase() + userChoice.slice(1);
-    console.log('You chose: '+ userChoiceCap);
-    return userChoiceCap;
-}
-
-
 function playRound(humanChoice, computerChoice){
-    let winner=0;
     if (humanChoice == computerChoice){
-        console.log('Tie!');
+        resultdiv.textContent+="Tie!" + '\n';
     }
     else if (humanChoice == 'Rock' && computerChoice == 'Scissors' ||
         humanChoice == 'Paper' && computerChoice == 'Rock' ||
         humanChoice == 'Scissors' && computerChoice == 'Paper'){
-        console.log('You win! ' + humanChoice+ ' beats '+ computerChoice);
-        winner=1;
+        resultdiv.textContent += 'You win! ${humanChoice} beats ${computerChoice} \n';
+        humanScore++;
     }
     else{
-        console.log('You lose. ' + computerChoice+ ' beats '+ humanChoice);
-        winner=2;
-    }
 
-    return winner;
-}
-
-
-function playGame(){
-    let humanScore=0;
-    let computerScore=0;
-    
-
-    for (let i = 0; i < 5; i++){
-        let humanChoice= getHumanChoice();
-        let computerChoice= getComputerChoice();
-        let winner=playRound(humanChoice, computerChoice);
-        console.log('Round '+ Number(i+1) + ' complete!');
-        if (winner==1){
-            humanScore++;
-        }
-        else if (winner==2) {
-            computerScore++;
-        }
-        console.log('Your Score: '+ humanScore+ '. Computer Score: '+ computerScore)
-
-        if (i==4){
-            console.log('Game Complete');
-        }
-        else{
-            let continueChoice=prompt("Would you like to play another round? Enter Yes or No: ");
-            if (continueChoice=='No' || continueChoice== 'no'){
-                break;
-            }
-        }
-       
-    }
-
-    if (humanScore==computerScore){
-        console.log('You tied with the computer! Guess you are just as smart :)');
-    }
-
-    else if(humanScore > computerScore){
-        console.log('You beat the computer! Humans still control machines I guess!');
-    }
-
-    else{
-        console.log('Oh no, you lost. Better luck next time!');
+        resultdiv.textContent +='You lose. ${computerChoice} beats ${humanChoice} \n';
+        computerScore++;
     }
     
-
 }
-
-playGame();
