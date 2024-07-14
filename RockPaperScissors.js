@@ -76,7 +76,9 @@ function addResultText(text){
 
 
 const finalResults=document.createElement('div');
+finalResults.className = 'finalResultsDiv';
 document.body.appendChild(finalResults);
+
 function displayResults(){
     
     
